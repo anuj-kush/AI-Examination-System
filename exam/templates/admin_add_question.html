@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white py-3">
+                    <h4 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Add New Question</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form method="POST">
+                        {% csrf_token %}
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-8">
+                                <label class="form-label fw-bold">Select Course</label>
+                                {{ form.course }}
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Marks</label>
+                                {{ form.marks }}
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Question</label>
+                            {{ form.question }}
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Option 1</label>
+                                {{ form.option1 }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Option 2</label>
+                                {{ form.option2 }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Option 3</label>
+                                {{ form.option3 }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Option 4</label>
+                                {{ form.option4 }}
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold text-success">Correct Answer</label>
+                            {{ form.answer }}
+                            <small class="text-muted">Select which option is the correct one.</small>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">Save to Question Bank</button>
+                            <a href="{% url 'teacher-dashboard' %}" class="btn btn-light">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="card-header {% if marks >= 40 %}bg-success{% else %}bg-danger{% endif %} py-4">
+                    <h2 class="text-white mb-0">Exam Result Summary</h2>
+                </div>
+                
+                <div class="card-body p-5">
+                    <div class="display-1 fw-bold mb-2 {% if marks >= 40 %}text-success{% else %}text-danger{% endif %}">
+                        {{ marks }}%
+                    </div>
+                    <p class="text-muted text-uppercase fw-bold letter-spacing-1">Overall Score</p>
+
+                    <hr class="my-4">
+
+                    <div class="row g-4 text-start">
+                        <div class="col-sm-6">
+                            <div class="p-3 border rounded-3 bg-light">
+                                <small class="text-muted d-block">Course Name</small>
+                                <span class="fw-bold">{{ course.course_name }}</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="p-3 border rounded-3 bg-light">
+                                <small class="text-muted d-block">Result Status</small>
+                                <span class="fw-bold {% if marks >= 40 %}text-success{% else %}text-danger{% endif %}">
+                                    {% if marks >= 40 %}PASSED{% else %}FAILED{% endif %}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-5 d-grid gap-2 d-md-flex justify-content-md-center">
+                        <a href="{% url 'student-dashboard' %}" class="btn btn-outline-dark px-4 rounded-pill">
+                            <i class="fas fa-home me-2"></i>Back to Dashboard
+                        </a>
+                        <a href="#" class="btn btn-primary px-4 rounded-pill">
+                            <i class="fas fa-download me-2"></i>Download Certificate
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .letter-spacing-1 { letter-spacing: 2px; }
+    .rounded-4 { border-radius: 1.25rem; }
+</style>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="card-header bg-primary py-4 text-center border-0">
+                    <h3 class="fw-bold text-white mb-0">
+                        <i class="fas fa-edit me-2"></i>Edit Exam Settings
+                    </h3>
+                    <p class="text-white-50 mb-0 mt-2 small">Update details for: {{ course.course_name }}</p>
+                </div>
+
+                <div class="card-body p-4 p-md-5 bg-white">
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold text-dark">Course Name</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="fas fa-book text-muted"></i></span>
+                                <input type="text" name="course_name" value="{{ course.course_name }}" class="form-control border-start-0 bg-light" required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label fw-bold text-dark">Total Questions</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0"><i class="fas fa-list-ol text-muted"></i></span>
+                                    <input type="number" name="question_number" value="{{ course.question_number }}" class="form-control border-start-0 bg-light" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label fw-bold text-dark">Total Marks</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0"><i class="fas fa-star text-muted"></i></span>
+                                    <input type="number" name="total_marks" value="{{ course.total_marks }}" class="form-control border-start-0 bg-light" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold text-dark">Exam Duration (Minutes)</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="fas fa-clock text-muted"></i></span>
+                                <input type="number" name="duration" value="{{ course.duration }}" class="form-control border-start-0 bg-light" required>
+                            </div>
+                            <div class="form-text text-muted mt-2">
+                                <i class="fas fa-info-circle me-1"></i> Students will see a synchronized timer based on this value.
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 mt-5">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-sm">
+                                <i class="fas fa-save me-2"></i>Save Changes
+                            </button>
+                            <a href="{% url 'teacher-dashboard' %}" class="btn btn-outline-secondary btn-lg rounded-pill">
+                                Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body { background-color: #f0f2f5; }
+    .input-group-text { border-color: #dee2e6; }
+    .form-control:focus {
+        border-color: #0d6efd;
+        box-shadow: none;
+        background-color: #fff !important;
+    }
+    .rounded-4 { border-radius: 1.25rem !important; }
+</style>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="fw-bold"><i class="fas fa-trophy text-warning me-2"></i>Global Leaderboard</h1>
+        <p class="text-muted">Celebrating our top-performing students</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-dark text-white">
+                        <tr>
+                            <th class="py-3 ps-4">Rank</th>
+                            <th class="py-3">Student Name</th>
+                            <th class="py-3 text-center">Total Marks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in top_performers %}
+                        <tr>
+                            <td class="ps-4">
+                                {% if forloop.counter == 1 %}
+                                    <span class="badge bg-warning text-dark"><i class="fas fa-medal"></i> 1st</span>
+                                {% elif forloop.counter == 2 %}
+                                    <span class="badge bg-secondary"><i class="fas fa-medal"></i> 2nd</span>
+                                {% elif forloop.counter == 3 %}
+                                    <span class="badge bg-info"><i class="fas fa-medal"></i> 3rd</span>
+                                {% else %}
+                                    <span class="fw-bold text-muted">#{{ forloop.counter }}</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                        {{ student.student__username|first|upper }}
+                                    </div>
+                                    <span class="fw-semibold">
+                                        {{ student.student__first_name }} {{ student.student__last_name|default:"" }}
+                                        <small class="text-muted d-block">@{{ student.student__username }}</small>
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="text-center fw-bold text-primary fs-5">
+                                {{ student.total_score }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

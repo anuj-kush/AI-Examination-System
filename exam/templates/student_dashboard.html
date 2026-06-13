@@ -1,0 +1,225 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="container py-5">
+    <div class="row mb-4 align-items-center">
+        <div class="col-md-8">
+            <h2 class="fw-bold">Welcome back, {{ request.user.first_name|default:request.user.username }}!</h2>
+            <p class="text-muted mb-0">Explore available assessments and improve your skills.</p>
+        </div>
+        <div class="col-md-4 text-md-end mt-3 mt-md-0">
+            <a href="{% url 'student-dashboard' %}" class="btn btn-outline-primary rounded-pill px-4 shadow-sm">
+                <i class="fas fa-sync-alt me-2"></i>Refresh Dashboard
+            </a>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 p-3 bg-white">
+                <div class="card-body d-flex align-items-center">
+                    <div class="icon-box bg-primary-subtle text-primary rounded-3 p-3 me-3">
+                        <i class="fas fa-file-alt fa-2x"></i>
+                    </div>
+                    <div>
+                        <h3 class="mb-0 fw-bold">{{ total_exams|default:"0" }}</h3>
+                        <span class="text-muted small">Exams Completed</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 p-3 bg-white">
+                <div class="card-body d-flex align-items-center">
+                    <div class="icon-box bg-success-subtle text-success rounded-3 p-3 me-3">
+                        <i class="fas fa-graduation-cap fa-2x"></i>
+                    </div>
+                    <div>
+                        <h3 class="mb-0 fw-bold">{{ avg_marks|default:"0" }}%</h3>
+                        <span class="text-muted small">Average Score</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 p-3 bg-white">
+                <div class="card-body d-flex align-items-center">
+                    <div class="icon-box bg-warning-subtle text-warning rounded-3 p-3 me-3">
+                        <i class="fas fa-award fa-2x"></i>
+                    </div>
+                    <div>
+                        <h3 class="mb-0 fw-bold">Active</h3>
+                        <span class="text-muted small">Rewards Earned</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if predicted_score %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card border-0 shadow-sm rounded-4 p-4 text-white" style="background: linear-gradient(45deg, #0d6efd, #6610f2);">
+            <div class="d-flex align-items-center">
+                <div class="icon-box bg-white text-primary rounded-circle p-3 me-4 shadow-sm">
+                    <i class="fas fa-brain fa-2x"></i>
+                </div>
+                <div class="flex-grow-1">
+                    <h4 class="fw-bold mb-1">AI Performance Prediction</h4>
+                    <p class="mb-0 opacity-90">Based on your current learning trend, our AI predicts your next exam score will be:</p>
+                </div>
+                <div class="text-end">
+                    <h2 class="fw-bold mb-0 display-5">{{ predicted_score }}</h2>
+                    <small class="opacity-75 text-uppercase fw-bold">Predicted Marks</small>
+                </div>
+            </div>
+            
+            {% if predicted_score < 10 %}
+            <div class="mt-3 pt-3 border-top border-white border-opacity-25">
+                <p class="mb-0 small">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <strong>Study Alert:</strong> Your current trend is slightly declining. We suggest reviewing your weak areas to improve this prediction!
+                </p>
+            </div>
+            {% elif predicted_score >= 15 %}
+            <div class="mt-3 pt-3 border-top border-white border-opacity-25">
+                <p class="mb-0 small">
+                    <i class="fas fa-rocket me-2"></i>
+                    <strong>Excellent Progress!</strong> You are on a strong upward trajectory. Keep up the great work!
+                </p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+                <h4 class="fw-bold mb-4"><i class="fas fa-chart-area text-primary me-2"></i>Performance Growth</h4>
+                <div style="height: 350px; width: 100%;">
+                    <canvas id="performanceChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-5">
+        <h4 class="fw-bold mb-4"><i class="fas fa-book-open text-primary me-2"></i>Available Exams</h4>
+        <div class="row g-4">
+            {% for c in courses %}
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm rounded-4 h-100 exam-card">
+                    <div class="card-body p-4 text-center">
+                        <h5 class="fw-bold mb-2">{{ c.course_name }}</h5>
+                        <p class="text-muted small mb-4">Questions: {{ c.question_number }} | Marks: {{ c.total_marks }}</p>
+                        <a href="{% url 'student-exam' c.id %}" class="btn btn-primary w-100 rounded-pill shadow-sm">
+                            Start Exam
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-5 bg-light rounded-4">
+                <p class="text-muted">No exams currently available.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-4 mb-5">
+        <div class="card-header bg-white py-4 px-4 border-0">
+            <h5 class="fw-bold mb-0"><i class="fas fa-history me-2 text-primary"></i>Your Exam History</h5>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">Course Name</th>
+                            <th>Score</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for r in results %}
+                        <tr>
+                            <td class="ps-4 fw-bold text-dark">{{ r.exam.course_name }}</td>
+                            <td>{{ r.marks }} / {{ r.exam.total_marks }}</td>
+                            <td>
+                                {% if r.marks >= 8 %} 
+                                    <span class="badge rounded-pill bg-success-subtle text-success border border-success px-3">Passed</span>
+                                {% else %}
+                                    <span class="badge rounded-pill bg-danger-subtle text-danger border border-danger px-3">Failed</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ r.date|date:"d M, Y" }}</td>
+                            <td class="text-center">
+                                <a href="{% url 'download-pdf' r.id %}" class="btn btn-sm btn-outline-info rounded-pill px-3 me-2">
+                                    <i class="fas fa-file-pdf"></i> Result
+                                </a>
+                                
+                                {% if r.marks >= 8 %} 
+                                <a href="{% url 'download-certificate' r.id %}" class="btn btn-sm btn-warning rounded-pill px-3 shadow-sm">
+                                    <i class="fas fa-award"></i> Certificate
+                                </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center py-4 text-muted">No exams taken yet.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body { background-color: #f8f9fa; }
+    .bg-primary-subtle { background-color: #e7f1ff; }
+    .bg-success-subtle { background-color: #e1f7ec; }
+    .bg-danger-subtle { background-color: #fceaea; } /* Added subtle red */
+    .bg-warning-subtle { background-color: #fff8e6; }
+    .rounded-4 { border-radius: 1.25rem !important; }
+    .exam-card:hover { transform: translateY(-10px); transition: 0.3s; }
+</style>
+
+<div id="exam-labels-data" style="display: none;">{{ labels|safe }}</div>
+<div id="exam-scores-data" style="display: none;">{{ scores|safe }}</div>
+
+<script>
+    const ctx = document.getElementById('performanceChart').getContext('2d');
+    const examLabels = JSON.parse(document.getElementById('exam-labels-data').textContent);
+    const examScores = JSON.parse(document.getElementById('exam-scores-data').textContent);
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: examLabels,
+            datasets: [{
+                label: 'Score',
+                data: examScores,
+                borderColor: '#0d6efd',
+                backgroundColor: 'rgba(13, 110, 253, 0.1)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } }
+        }
+    });
+</script>
+{% endblock %}

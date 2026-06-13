@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<section class="bg-primary text-white py-5 text-center">
+    <div class="container">
+        <h1 class="display-4 fw-bold">About Our Portal</h1>
+        <p class="lead">Bridging the gap between traditional learning and digital excellence.</p>
+    </div>
+</section>
+
+<div class="container my-5">
+    <div class="row align-items-center">
+        <div class="col-lg-6">
+            <h2 class="fw-bold text-dark mb-4">Empowering Educators & Students</h2>
+            <p class="text-muted">
+                Our Online Examination System is designed to provide a secure, scalable, and easy-to-use platform 
+                for educational institutions. We understand the challenges of remote assessments, which is why 
+                we've built a system that prioritizes <strong>integrity</strong>, <strong>automation</strong>, 
+                and <strong>user experience</strong>.
+            </p>
+            <p class="text-muted">
+                Whether you are a teacher looking to automate grading or a student aiming to track your 
+                performance over time, our portal offers the tools you need to succeed in a digital-first world.
+            </p>
+            
+            <div class="mt-4">
+                <div class="d-flex align-items-center mb-3">
+                    <i class="fas fa-check-circle text-success me-3 fa-lg"></i>
+                    <span class="fw-semibold">Automated Result Generation</span>
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                    <i class="fas fa-check-circle text-success me-3 fa-lg"></i>
+                    <span class="fw-semibold">Role-Based Secure Dashboards</span>
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                    <i class="fas fa-check-circle text-success me-3 fa-lg"></i>
+                    <span class="fw-semibold">Integrated PDF Performance Reports</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 mt-5 mt-lg-0">
+            <div class="row g-3">
+                <div class="col-6">
+                    <div class="p-4 bg-light text-center rounded shadow-sm">
+                        <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                        <h5 class="fw-bold">User Friendly</h5>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="p-4 bg-light text-center rounded shadow-sm border-bottom border-primary border-4">
+                        <i class="fas fa-shield-alt fa-3x text-primary mb-3"></i>
+                        <h5 class="fw-bold">Secure</h5>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="p-4 bg-light text-center rounded shadow-sm">
+                        <i class="fas fa-chart-bar fa-3x text-primary mb-3"></i>
+                        <h5 class="fw-bold">Analytical</h5>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="p-4 bg-light text-center rounded shadow-sm">
+                        <i class="fas fa-clock fa-3x text-primary mb-3"></i>
+                        <h5 class="fw-bold">Real-time</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-8 mx-auto">
+                <h3 class="fw-bold">Our Mission</h3>
+                <p class="fst-italic text-secondary">
+                    "To create a transparent and efficient examination ecosystem that saves time for teachers 
+                    and provides instant feedback to students, fostering a culture of continuous learning."
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="container my-5 py-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold">Our Project Team</h2>
+        <p class="text-muted">The developers behind this Online Examination System</p>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm text-center p-4 team-card">
+                <div class="mb-3">
+                    <img src="https://via.placeholder.com/150" class="rounded-circle border border-4 border-primary shadow" alt="Team Member" width="130">
+                </div>
+                <h5 class="fw-bold mb-1">Anuj Kushwaha</h5>
+                <p class="text-primary small fw-bold mb-3">Lead Backend Developer</p>
+                <p class="text-muted small">Specialized in Django logic, database management, and system architecture.</p>
+                <div class="social-links mt-3">
+                    <a href="#" class="text-muted me-3"><i class="fab fa-github fa-lg"></i></a>
+                    <a href="#" class="text-muted me-3"><i class="fab fa-linkedin fa-lg"></i></a>
+                    <a href="#" class="text-muted"><i class="fas fa-envelope fa-lg"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm text-center p-4 team-card">
+                <div class="mb-3">
+                    <img src="https://via.placeholder.com/150" class="rounded-circle border border-4 border-secondary shadow" alt="Team Member" width="130">
+                </div>
+                <h5 class="fw-bold mb-1">Abhishek Verma</h5>
+                <p class="text-secondary small fw-bold mb-3">Frontend Designer</p>
+                <p class="text-muted small">Specialized in UI/UX design, Bootstrap integration, and responsive layouts.</p>
+                <div class="social-links mt-3">
+                    <a href="#" class="text-muted me-3"><i class="fab fa-github fa-lg"></i></a>
+                    <a href="#" class="text-muted me-3"><i class="fab fa-linkedin fa-lg"></i></a>
+                    <a href="#" class="text-muted"><i class="fas fa-envelope fa-lg"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .team-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-radius: 15px;
+    }
+    .team-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    }
+    .social-links a:hover {
+        color: #0d6efd !important;
+    }
+</style>
+{% endblock %}

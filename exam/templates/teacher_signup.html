@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-lg rounded-4">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-chalkboard-teacher fa-3x text-primary mb-3"></i>
+                        <h2 class="fw-bold">Teacher Registration</h2>
+                        <p class="text-muted">Create an account to manage exams and students</p>
+                    </div>
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">{{ field.label }}</label>
+                                {{ field }}
+                                {% if field.errors %}
+                                    <small class="text-danger">{{ field.errors|striptags }}</small>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        
+                        <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill mt-4">
+                            Register as Teacher
+                        </button>
+                    </form>
+
+                    <div class="text-center mt-4">
+                        <span>Already have a teacher account? <a href="{% url 'teacher-login' %}" class="text-decoration-none fw-bold">Login here</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    input { 
+        display: block; 
+        width: 100%; 
+        padding: 0.375rem 0.75rem; 
+        font-size: 1rem; 
+        line-height: 1.5; 
+        color: #212529; 
+        background-color: #fff; 
+        border: 1px solid #ced4da; 
+        border-radius: 0.375rem;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<header class="hero-section">
+    <div class="container text-center">
+        <h1 class="display-3 fw-bold mb-4">Empowering Education Online</h1>
+        <p class="lead mb-5">A secure, scalable, and easy-to-use platform for conducting exams and tracking student progress.</p>
+        {% if not user.is_authenticated %}
+            <a href="{% url 'student-login' %}" class="btn btn-primary btn-lg px-5 me-3">I am a Student</a>
+            <a href="{% url 'teacher-login' %}" class="btn btn-outline-light btn-lg px-5">I am a Teacher</a>
+        {% endif %}
+    </div>
+</header>
+
+<section class="container py-5">
+    <div class="row text-center g-4">
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body">
+                    <i class="fas fa-user-shield fa-3x text-primary mb-3"></i>
+                    <h3>Secure Testing</h3>
+                    <p class="text-muted">Proctoring features to prevent tab switching and ensure exam integrity.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body">
+                    <i class="fas fa-bolt fa-3x text-warning mb-3"></i>
+                    <h3>Instant Results</h3>
+                    <p class="text-muted">Automatic grading for MCQs. Students get their marks immediately after submission.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body">
+                    <i class="fas fa-chart-line fa-3x text-success mb-3"></i>
+                    <h3>Teacher Analytics</h3>
+                    <p class="text-muted">Comprehensive dashboards for teachers to track class performance and statistics.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
