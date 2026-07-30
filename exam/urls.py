@@ -29,7 +29,7 @@ urlpatterns = [
     path('calculate-marks/<int:pk>/', views.calculate_marks_view, name='calculate-marks'),
     path('leaderboard/', views.leaderboard_view, name='leaderboard'),
     path('teacher-signup/', views.teacher_signup_view, name='teacher-signup'),
-    path('teacher-dashboard/', views.teacher_dashboard_view, name='teacher-dashboard'),
+
     path('admin-add-course/', views.admin_add_course_view, name='admin-add-course'),
     path('view-result/', views.view_result_view, name='view-result'),
     path('generate-ai-questions/', views.generate_ai_questions_views, name='generate-ai-questions'),

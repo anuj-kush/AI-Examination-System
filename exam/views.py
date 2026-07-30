@@ -309,29 +309,39 @@ def student_signup(request):
     return render(request, 'student_signup.html', {'form': form})
 
 
+
+
 def teacher_signup_view(request):
     if request.method == 'POST':
         form = TeacherSignUpForm(request.POST)
+
         if form.is_valid():
             user = form.save(commit=False)
             user.set_password(form.cleaned_data['password'])
+
+            # Make this user a teacher
+            user.is_staff = True
+
             user.save()
-            
-            # Create/Get Teacher Group and add user
+
+            # Add to Teacher group
             group, created = Group.objects.get_or_create(name='TEACHER')
             user.groups.add(group)
-            
+
             return redirect('teacher-login')
+
     else:
         form = TeacherSignUpForm()
+
     return render(request, 'teacher_signup.html', {'form': form})
 
 
 
+
+# Security Check
 @login_required
 def teacher_dashboard_view(request):
-    # Security Check
-    if not request.user.is_staff:
+    if not request.user.groups.filter(name='TEACHER').exists():
         return redirect('student-dashboard')
 
     # Fetch Data for Stats and Course Table ONLY
@@ -464,7 +474,9 @@ def delete_result_view(request, pk):
     return redirect('teacher-dashboard')
 
 # Configure your API Key
-genai.configure(api_key="AIzaSyCfuU0057dGe3uR1qW_mwPoG5Fyx73ZdCg")
+
+
+genai.configure(api_key=settings.GEMINI_API_KEY)
 def generate_ai_questions_views(request): 
     if request.method == 'POST':
         course_id = request.POST.get('course_id')
@@ -483,7 +495,7 @@ def generate_ai_questions_views(request):
         try:
             # Using gemini-pro for stability on older SDKs
             # Some environments require this specific alias
-            model = genai.GenerativeModel("gemini-2.5-flash")
+            model = genai.GenerativeModel("gemini-2.5-pro")
             response = model.generate_content(prompt)
             
             # --- STRONGER JSON EXTRACTION ---
