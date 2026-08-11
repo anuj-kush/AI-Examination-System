@@ -520,7 +520,6 @@ It demonstrates practical experience with:
 * Authentication
 * Role-based authorization
 * AI integration
-* Cloud deployment
 * Git/GitHub
 
 ---
